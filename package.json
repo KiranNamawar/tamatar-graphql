@@ -1,0 +1,30 @@
+{
+	"name": "tamatar-graphql",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "bun --watch src/index.ts"
+	},
+	"prisma": {
+		"schema": "./prisma"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/bun": "latest",
+		"prisma": "^6.7.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@pothos/core": "^4.6.2",
+		"@pothos/plugin-prisma": "^4.8.1",
+		"@pothos/plugin-zod": "^4.2.1",
+		"@prisma/client": "^6.7.0",
+		"graphql": "^16.11.0",
+		"graphql-scalars": "^1.24.2",
+		"graphql-yoga": "^5.13.4",
+		"zod": "^3.24.4"
+	}
+}

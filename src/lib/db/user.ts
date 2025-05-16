@@ -39,6 +39,31 @@ export async function getUserByEmail(email: string): Promise<Return<User>> {
 	}
 }
 
+export async function getUserByGoogleId(id: string): Promise<Return<User>> {
+	try {
+		const user = await prisma.user.findUnique({
+			where: { googleId: id },
+		});
+
+		if (!user) {
+			return {
+				success: false,
+				error: {
+					message: "User not found in Database",
+					code: ErrorCode.NOT_FOUND,
+				},
+			};
+		}
+
+		return {
+			success: true,
+			data: user,
+		};
+	} catch (error) {
+		throw new DatabaseError(error);
+	}
+}
+
 export async function updateUser(props: Prisma.UserUpdateInput, id: string) {
 	try {
 		return await prisma.user.update({

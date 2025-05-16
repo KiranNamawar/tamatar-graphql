@@ -113,6 +113,16 @@ builder.mutationField("verify", (t) =>
 				});
 			}
 
+			if (purpose === OtpPurpose.FORGOT_PASSWORD) {
+				// this token is used to reset the password
+				return await createToken({
+					payload: {
+						sub: user.data.id,
+					},
+					expiresInMinutes: 10, // 10 minutes
+				});
+			}
+
 			return "Verification successful";
 		},
 	}),

@@ -1,7 +1,12 @@
+import { OtpPurpose } from "@/generated/prisma";
+import { updateUser } from "@/lib/db";
 import builder from "@/lib/graphql/pothos";
 import { PASSWORD_SCHEMA } from "@/lib/types/constants";
+import { AppError, ErrorCode } from "@/lib/utils/error";
+import { verifyToken } from "@/lib/utils/jwt";
 import { password } from "bun";
 import { z } from "zod";
+import { hashPassword } from "./utils";
 
 builder.mutationField("resetPassword", (t) =>
 	t.field({
@@ -21,8 +26,30 @@ builder.mutationField("resetPassword", (t) =>
 					path: ["confirmPassword"],
 				}),
 		},
-		resolve: async (parent, { password }, context) => {
-			// TODO: Implement your reset password logic here
+		resolve: async (_, { password }, context: any) => {
+			const { accessToken } = context;
+			if (!accessToken) {
+				throw new AppError("Email not verified", {
+					code: ErrorCode.UNAUTHORIZED,
+				});
+			}
+
+			const res = await verifyToken(accessToken);
+			if (!res.success) {
+				throw new AppError("Invalid token", {
+					code: ErrorCode.UNAUTHORIZED,
+				});
+			}
+
+			const { sub } = res.data;
+
+			await updateUser(
+				{
+					password: await hashPassword(password),
+				},
+				sub as string,
+			);
+
 			return true;
 		},
 	}),

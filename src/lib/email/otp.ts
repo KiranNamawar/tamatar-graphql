@@ -1,4 +1,4 @@
-import { DOMAIN } from "../types/constants";
+import { EMAIL_DOMAIN } from "../types/constants";
 import { sendEmail } from "./resend";
 import OtpVerificationEmail from "./templates/otp-verification";
 
@@ -7,7 +7,7 @@ export async function sendOtp(props: {
 	otp: string;
 	name?: string;
 }) {
-	const from = `Tamatar Store <auth@${DOMAIN}>`;
+	const from = `Tamatar Store <auth@${EMAIL_DOMAIN}>`;
 	const subject = "verify your email address";
 
 	const data = await sendEmail({
@@ -19,4 +19,6 @@ export async function sendOtp(props: {
 			userName: props.name,
 		}),
 	});
+
+	return data;
 }

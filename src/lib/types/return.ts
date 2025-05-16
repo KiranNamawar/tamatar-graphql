@@ -1,9 +1,14 @@
-export type Return<T> = {
-    success: boolean;
-    data?: T;
-    error?: {
-        message: string;
-        code?: string;
-    };
-}
+import type { ErrorCode } from "../utils/error";
 
+export type Return<T> =
+	| {
+			success: true;
+			data: T;
+	  }
+	| {
+			success: false;
+			error: {
+				message: string;
+				code: ErrorCode;
+			};
+	  };

@@ -1,6 +1,7 @@
 import { jwtVerify, SignJWT, type JWTPayload } from "jose";
 import { getEnvVariable } from "./env";
 import type { Return } from "../types/return";
+import { ErrorCode } from "./error";
 
 export async function createToken(params: {
 	payload: {
@@ -30,7 +31,7 @@ export async function verifyToken(token: string): Promise<Return<JWTPayload>> {
 		return {
 			success: false,
 			error: {
-				code: "JWT_VERIFY_ERROR",
+				code: ErrorCode.INVALID_JWT,
 				message: error.message,
 			},
 		};

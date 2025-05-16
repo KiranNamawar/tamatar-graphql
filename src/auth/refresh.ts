@@ -1,10 +1,11 @@
 import builder from "@/lib/graphql/pothos";
 
-builder.queryField("me", (t) =>
+builder.mutationField("refresh", (t) =>
     t.field({
         type: "String",
         resolve: async (parent, args, context) => {
-            return "Hey there";
+            // TODO: Implement your refresh token logic here
+            return "access_token";
         },
     })
 );

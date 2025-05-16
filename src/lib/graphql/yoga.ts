@@ -10,11 +10,11 @@ const yoga = createYoga({
 		const refreshToken = await request.cookieStore
 			?.get("refreshToken")
 			.then((cookie) => cookie?.value);
-
 		const accessToken = request.headers.get("authorization")?.split(" ")[1];
 		return {
 			refreshToken,
 			accessToken,
+			cookies: request.cookieStore,
 		};
 	},
 	plugins: [

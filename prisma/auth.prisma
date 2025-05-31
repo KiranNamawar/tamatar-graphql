@@ -18,26 +18,30 @@ model User {
 
   // Email verification
   emailVerificationTokens EmailVerificationToken[]
-  // Password reset
-  passwordResetTokens     PasswordResetToken[]
 
-  // Tamatar features relations
-  projects        Project[]
-  dailyLogs       DailyLog[]
-  resources       Resource[]
-  resourceRatings ResourceRating[]
-  learningPaths   LearningPath[]
-  followers       Follow[]            @relation("UserFollowers")
-  following       Follow[]            @relation("UserFollowing")
-  achievements    UserAchievement[]
-  goals           Goal[]
-  focusSessions   FocusSession[]
-  moods           Mood[]
-  skillProgresses SkillProgress[]
-  quizzes         Quiz[]
-  notifications   Notification[]
-  menteeRequests  MentorshipRequest[] @relation("MenteeRequests")
-  mentorRequests  MentorshipRequest[] @relation("MentorRequests")
+  // Password reset
+  passwordResetTokens PasswordResetToken[]
+  // Relations to other models
+  projects            Project[]
+  dailyLogs           DailyLog[]
+  resources           Resource[]
+  resourceRatings     ResourceRating[]
+  learningPaths       LearningPath[]
+
+  // Social relations
+  followers        Follow[]            @relation("UserFollowers")
+  following        Follow[]            @relation("UserFollowing")
+  userAchievements UserAchievement[]
+  notifications    Notification[]
+  menteeRequests   MentorshipRequest[] @relation("MenteeRequests")
+  mentorRequests   MentorshipRequest[] @relation("MentorRequests")
+
+  // Analytics and wellness
+  goals         Goal[]
+  focusSessions FocusSession[]
+  moods         Mood[]
+  skillProgress SkillProgress[]
+  quizzes       Quiz[]
 
   @@map("users")
 }

@@ -1,114 +1,114 @@
 // Social features and community schema
 
 model Follow {
-    id          String   @id @default(cuid())
-    followerId  String // User who is following
-    followingId String // User being followed
-    createdAt   DateTime @default(now())
+  id          String   @id @default(cuid())
+  followerId  String // User who is following
+  followingId String // User being followed
+  createdAt   DateTime @default(now())
 
-    // Relations
-    follower  User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
-    following User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+  // Relations
+  follower  User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
 
-    @@unique([followerId, followingId])
-    @@index([followerId])
-    @@index([followingId])
-    @@map("follows")
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("follows")
 }
 
 model Achievement {
-    id          String              @id @default(cuid())
-    name        String              @unique
-    description String
-    icon        String
-    category    AchievementCategory
-    condition   String // JSON describing the achievement condition
-    points      Int                 @default(0)
-    createdAt   DateTime            @default(now())
+  id          String              @id @default(cuid())
+  name        String              @unique
+  description String
+  icon        String
+  category    AchievementCategory
+  condition   String // JSON describing the achievement condition
+  points      Int                 @default(0)
+  createdAt   DateTime            @default(now())
 
-    // Relations
-    userAchievements UserAchievement[]
+  // Relations
+  userAchievements UserAchievement[]
 
-    @@index([category])
-    @@map("achievements")
+  @@index([category])
+  @@map("achievements")
 }
 
 model UserAchievement {
-    id            String   @id @default(cuid())
-    userId        String
-    achievementId String
-    unlockedAt    DateTime @default(now())
+  id            String   @id @default(cuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
 
-    // Relations
-    user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-    achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  // Relations
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
 
-    @@unique([userId, achievementId])
-    @@index([userId])
-    @@map("user_achievements")
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@map("user_achievements")
 }
 
 model Notification {
-    id        String           @id @default(cuid())
-    userId    String
-    type      NotificationType
-    title     String
-    message   String
-    data      Json? // Additional data for the notification
-    read      Boolean          @default(false)
-    createdAt DateTime         @default(now())
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  data      Json? // Additional data for the notification
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
 
-    // Relations
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@index([userId])
-    @@index([read])
-    @@index([createdAt])
-    @@map("notifications")
+  @@index([userId])
+  @@index([read])
+  @@index([createdAt])
+  @@map("notifications")
 }
 
 model MentorshipRequest {
-    id        String           @id @default(cuid())
-    menteeId  String
-    mentorId  String
-    message   String
-    status    MentorshipStatus @default(PENDING)
-    createdAt DateTime         @default(now())
-    updatedAt DateTime         @updatedAt
+  id        String           @id @default(cuid())
+  menteeId  String
+  mentorId  String
+  message   String
+  status    MentorshipStatus @default(PENDING)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 
-    // Relations
-    mentee User @relation("MenteeRequests", fields: [menteeId], references: [id], onDelete: Cascade)
-    mentor User @relation("MentorRequests", fields: [mentorId], references: [id], onDelete: Cascade)
+  // Relations
+  mentee User @relation("MenteeRequests", fields: [menteeId], references: [id], onDelete: Cascade)
+  mentor User @relation("MentorRequests", fields: [mentorId], references: [id], onDelete: Cascade)
 
-    @@unique([menteeId, mentorId])
-    @@index([mentorId])
-    @@index([status])
-    @@map("mentorship_requests")
+  @@unique([menteeId, mentorId])
+  @@index([mentorId])
+  @@index([status])
+  @@map("mentorship_requests")
 }
 
 // Enums
 enum AchievementCategory {
-    LEARNING
-    CONSISTENCY
-    SOCIAL
-    PROJECT
-    SKILL
-    MILESTONE
+  LEARNING
+  CONSISTENCY
+  SOCIAL
+  PROJECT
+  SKILL
+  MILESTONE
 }
 
 enum NotificationType {
-    ACHIEVEMENT_UNLOCKED
-    NEW_FOLLOWER
-    MENTORSHIP_REQUEST
-    RESOURCE_RECOMMENDATION
-    PROJECT_MILESTONE
-    DAILY_REMINDER
-    WEEKLY_SUMMARY
+  ACHIEVEMENT_UNLOCKED
+  NEW_FOLLOWER
+  MENTORSHIP_REQUEST
+  RESOURCE_RECOMMENDATION
+  PROJECT_MILESTONE
+  DAILY_REMINDER
+  WEEKLY_SUMMARY
 }
 
 enum MentorshipStatus {
-    PENDING
-    ACCEPTED
-    DECLINED
-    COMPLETED
+  PENDING
+  ACCEPTED
+  DECLINED
+  COMPLETED
 }

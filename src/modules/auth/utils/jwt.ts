@@ -122,3 +122,43 @@ export async function createTokenResponse(
 		refreshToken,
 	};
 }
+
+/**
+ * Generate a generic token with custom payload and expiration
+ */
+export async function generateToken<T extends Record<string, any>>(
+	payload: T,
+	expirationTime: string,
+): Promise<string> {
+	return await new SignJWT(payload)
+		.setProtectedHeader({ alg: "HS256", typ: "generic" })
+		.setIssuedAt()
+		.setExpirationTime(expirationTime)
+		.sign(secretKey);
+}
+
+/**
+ * Verify and decode a generic token
+ */
+export async function verifyToken<T extends Record<string, any>>(
+	token: string,
+): Promise<T | null> {
+	try {
+		const { payload } = await jwtVerify(token, secretKey);
+		return payload as unknown as T;
+	} catch (error) {
+		return null;
+	}
+}
+
+// Export all JWT utilities as a single object
+export const jwtUtils = {
+	signAccessToken,
+	signRefreshToken,
+	verifyAccessToken,
+	verifyRefreshToken,
+	extractBearerToken,
+	createTokenResponse,
+	generateToken,
+	verifyToken,
+};

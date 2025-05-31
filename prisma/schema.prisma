@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+  output   = "../src/generated/pothos-types.ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// All model definitions are in separate schema files:
+// - auth.prisma: User authentication and session management
+// - projects.prisma: Project management and GitHub integration  
+// - resources.prisma: Learning resources and knowledge management
+// - social.prisma: Community features and social interactions
+// - analytics.prisma: Analytics, tracking, and wellness features

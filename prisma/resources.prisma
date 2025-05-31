@@ -1,0 +1,120 @@
+// Learning resources and knowledge management schema
+
+model Resource {
+    id          String       @id @default(cuid())
+    title       String
+    description String?
+    url         String
+    type        ResourceType
+    category    String // e.g., "React", "Database", "DevOps"
+    difficulty  Difficulty   @default(BEGINNER)
+    tags        String[] // Array of tags
+    isPublic    Boolean      @default(true)
+    userId      String // User who added the resource
+    rating      Float?       @default(0)
+    views       Int          @default(0)
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+
+    // Relations
+    user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    dailyLogResources DailyLogResource[]
+    resourceRatings   ResourceRating[]
+    learningPathItems LearningPathItem[]
+
+    @@index([userId])
+    @@index([type])
+    @@index([category])
+    @@index([difficulty])
+    @@index([rating])
+    @@map("resources")
+}
+
+model DailyLogResource {
+    id         String @id @default(cuid())
+    dailyLogId String
+    resourceId String
+
+    // Relations
+    dailyLog DailyLog @relation(fields: [dailyLogId], references: [id], onDelete: Cascade)
+    resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+    @@unique([dailyLogId, resourceId])
+    @@map("daily_log_resources")
+}
+
+model ResourceRating {
+    id         String   @id @default(cuid())
+    userId     String
+    resourceId String
+    rating     Int // 1-5 stars
+    review     String?
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    // Relations
+    user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    resource Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, resourceId])
+    @@index([resourceId])
+    @@map("resource_ratings")
+}
+
+model LearningPath {
+    id             String     @id @default(cuid())
+    title          String
+    description    String?
+    userId         String // Creator
+    isPublic       Boolean    @default(false)
+    difficulty     Difficulty
+    estimatedHours Int?
+    tags           String[]
+    createdAt      DateTime   @default(now())
+    updatedAt      DateTime   @updatedAt
+
+    // Relations
+    user  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+    items LearningPathItem[]
+
+    @@index([userId])
+    @@index([difficulty])
+    @@map("learning_paths")
+}
+
+model LearningPathItem {
+    id             String  @id @default(cuid())
+    learningPathId String
+    resourceId     String
+    order          Int
+    isRequired     Boolean @default(true)
+
+    // Relations
+    learningPath LearningPath @relation(fields: [learningPathId], references: [id], onDelete: Cascade)
+    resource     Resource     @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+    @@unique([learningPathId, order])
+    @@unique([learningPathId, resourceId])
+    @@map("learning_path_items")
+}
+
+// Enums
+enum ResourceType {
+    ARTICLE
+    VIDEO
+    COURSE
+    TUTORIAL
+    DOCUMENTATION
+    BOOK
+    PODCAST
+    TOOL
+    LIBRARY
+    FRAMEWORK
+}
+
+enum Difficulty {
+    BEGINNER
+    INTERMEDIATE
+    ADVANCED
+    EXPERT
+}

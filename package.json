@@ -1,0 +1,42 @@
+{
+  "name": "tamatar-graphql",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "doppler run --command=\" bun run --watch src/index.ts\"",
+    "start": "doppler run --command=\"bun run src/index.ts\"",
+    "email": "email dev"
+  },
+  "prisma": {
+    "schema": "./prisma"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@types/bun": "latest",
+    "@types/ua-parser-js": "^0.7.39",
+    "react-email": "4.0.15"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@graphql-yoga/plugin-jwt": "^3.7.6",
+    "@graphql-yoga/plugin-response-cache": "^3.15.6",
+    "@plunk/node": "^3.0.3",
+    "@pothos/core": "^4.6.2",
+    "@pothos/plugin-prisma": "^4.8.1",
+    "@pothos/plugin-validation": "^3.10.2",
+    "@pothos/plugin-zod": "^4.2.1",
+    "@react-email/components": "0.0.41",
+    "graphql": "^16.11.0",
+    "graphql-scalars": "^1.24.2",
+    "graphql-yoga": "^5.13.5",
+    "hono": "^4.7.10",
+    "jose": "^6.0.11",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "ua-parser-js": "^2.0.3",
+    "zod": "^3.25.42"
+  }
+}

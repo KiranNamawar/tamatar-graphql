@@ -96,6 +96,31 @@ bun db:reset          # Reset database (development only)
 - **Social Features**: Follow developers, share progress, and build community
 - **Analytics**: Track progress patterns and learning insights
 
+## 🔄 Development Approach
+
+This project follows an **Iterative Development & Continuous Improvement** methodology:
+
+### ITTIR Cycle
+1. **Implement** - Focus on ONE component at a time
+2. **Test** - Verify functionality works correctly
+3. **Think** - Analyze implementation for improvements
+4. **Improve** - Optimize and enhance the code
+5. **Refactor** - Extract patterns and update documentation
+
+### Quality Gates
+- All tests must pass
+- TypeScript compiles without errors
+- Manual testing verifies functionality
+- Code follows established patterns
+- Documentation is updated
+
+### Development Priority
+1. **Core Infrastructure** (Database, Auth, GraphQL)
+2. **Feature Implementation** (Users, Projects, Logs)
+3. **Advanced Features** (Social, Analytics, GitHub)
+
+See [Development Rules](docs/DEVELOPMENT_RULES.md#rule-11-iterative-development--continuous-improvement) for complete details.
+
 ## 📖 Getting Help
 
 - Check the [documentation](docs/) for detailed information

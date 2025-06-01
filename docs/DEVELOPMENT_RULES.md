@@ -166,6 +166,121 @@ modules/users/
 - Implement proper authorization checks
 - Log all security events
 
+### Rule 11: Iterative Development & Continuous Improvement
+**Development Philosophy**: Focus on one component at a time, implement fully, test thoroughly, then refactor and improve before moving to the next component.
+
+#### Development Cycle (ITTIR - Implement, Test, Think, Improve, Refactor)
+1. **Implement**: Focus on ONE thing at a time
+   - One module (e.g., `users` module)
+   - One service function (e.g., `createUser`)
+   - One resolver (e.g., `createUser` mutation)
+   - One route (e.g., `POST /auth/login`)
+   - One database function (e.g., `getUserById`)
+
+2. **Test**: Verify the implementation works correctly
+   - Write and run unit tests for the component
+   - Test the API endpoint manually (Postman, curl, or GraphQL playground)
+   - Verify database operations work as expected
+   - Test error scenarios and edge cases
+   - Ensure TypeScript compilation passes without errors
+
+3. **Think**: Analyze the implementation critically
+   - Does this follow established patterns?
+   - Are there any security vulnerabilities?
+   - Is the code readable and maintainable?
+   - Are there performance implications?
+   - Does it handle errors appropriately?
+
+4. **Improve**: Look for enhancements and optimizations
+   - **Code Duplication**: Identify repetitive code across modules
+   - **Performance**: Optimize database queries, add indexes if needed
+   - **Error Handling**: Ensure consistent error responses
+   - **Type Safety**: Improve TypeScript types and validation
+   - **Documentation**: Add JSDoc comments for complex logic
+
+5. **Refactor**: Clean up and standardize
+   - Extract common patterns into utility functions
+   - Update shared schemas and types
+   - Consolidate similar validation logic
+   - Improve naming conventions if needed
+   - Update documentation and README files
+
+#### Implementation Order Priority
+**Phase 1: Core Infrastructure**
+- Database functions (one table at a time)
+- Authentication routes
+- Basic GraphQL schema setup
+
+**Phase 2: Feature Implementation**
+- User management (one operation at a time)
+- Project management
+- Daily logs
+- Resource management
+
+**Phase 3: Advanced Features**
+- Social features
+- Analytics
+- GitHub integration
+
+#### Quality Gates (Must Pass Before Moving On)
+1. **All tests pass**: Unit tests, integration tests
+2. **TypeScript compiles**: No type errors or `any` types
+3. **Manual testing works**: API endpoints respond correctly
+4. **Code review ready**: Follows established patterns and conventions
+5. **Documentation updated**: README files, JSDoc comments, type definitions
+
+#### Refactoring Checkpoints
+After implementing **every 3-5 components**, conduct a refactoring session:
+
+1. **Pattern Recognition**: Look for repeated code patterns
+2. **Utility Extraction**: Create shared utility functions
+3. **Schema Consolidation**: Merge similar Zod schemas
+4. **Type Improvements**: Enhance TypeScript definitions
+5. **Performance Review**: Identify optimization opportunities
+6. **Documentation Sync**: Update all relevant documentation
+
+#### Example Development Flow
+```bash
+# 1. IMPLEMENT: Create a new user service function
+# Focus only on createUser function
+src/modules/users/service.ts - implement createUser()
+
+# 2. TEST: Verify it works
+bun test users.service.test.ts
+# Manual test via GraphQL playground
+
+# 3. THINK: Review the implementation
+# - Does it follow our error handling patterns?
+# - Is input validation consistent with other modules?
+# - Are types properly defined?
+
+# 4. IMPROVE: Enhance based on analysis
+# - Add better error messages
+# - Improve TypeScript types
+# - Add JSDoc documentation
+
+# 5. REFACTOR: Clean up and standardize
+# - Extract common validation logic
+# - Update shared schemas if needed
+# - Update module README
+
+# THEN move to next component (e.g., updateUser function)
+```
+
+#### Anti-Patterns to Avoid
+- **Don't work on multiple modules simultaneously**
+- **Don't skip testing before moving to next component**
+- **Don't implement large features without breaking them down**
+- **Don't ignore refactoring opportunities**
+- **Don't forget to update documentation**
+
+#### Benefits of This Approach
+- **Higher Quality**: Each component is thoroughly tested and refined
+- **Consistency**: Patterns emerge and get standardized across the codebase
+- **Maintainability**: Regular refactoring prevents technical debt accumulation
+- **Knowledge Transfer**: Documentation stays current with implementation
+- **Debugging**: Issues are isolated to small, well-tested components
+
 ## Naming Conventions
 
 ### Files and Folders

@@ -88,6 +88,46 @@ src/
 - Use standardized error codes from `src/lib/errors.ts`
 - Follow error handling patterns documented in `docs/ERROR_CODES.md`
 
+## Development Approach
+
+### ITTIR Methodology
+Follow our **Iterative Development & Continuous Improvement** approach (ITTIR cycle):
+
+1. **Implement**: Focus on ONE component at a time
+   - One module, service function, resolver, or route
+   - Complete the implementation fully before moving on
+
+2. **Test**: Verify the implementation works correctly
+   - Write and run unit tests
+   - Manual API testing (GraphQL playground, Postman)
+   - Test error scenarios and edge cases
+
+3. **Think**: Analyze the implementation critically
+   - Security vulnerabilities? Performance implications?
+   - Follows established patterns? Proper error handling?
+
+4. **Improve**: Look for enhancements and optimizations
+   - Eliminate code duplication
+   - Optimize database queries
+   - Improve error handling and type safety
+
+5. **Refactor**: Clean up and standardize
+   - Extract common patterns into utilities
+   - Update shared schemas and types
+   - Update documentation
+
+### Quality Gates (Must Pass Before Moving On)
+- All tests pass (unit and integration)
+- TypeScript compiles without errors
+- Manual testing works correctly
+- Code follows established patterns
+- Documentation is updated
+
+### Implementation Priority
+- **Phase 1**: Database functions, authentication, GraphQL setup
+- **Phase 2**: User management, projects, daily logs, resources  
+- **Phase 3**: Social features, analytics, GitHub integration
+
 ## Code Quality Requirements
 - All functions must have explicit TypeScript return types
 - Business logic must be testable (dependency injection)
@@ -116,9 +156,16 @@ bun db:reset          # Reset database (development only)
 - Follow patterns established in existing modules
 - Refer to [Development Rules](../docs/DEVELOPMENT_RULES.md) for strict guidelines
 
-When implementing features, always prioritize:
-1. **Type Safety**: Use TypeScript and Zod validation
-2. **Security**: Validate inputs and implement proper authorization  
-3. **Performance**: Optimize database queries and use caching
-4. **Maintainability**: Follow established patterns and write tests
-5. **Documentation**: Update relevant docs when adding new features
+When implementing features, follow the ITTIR cycle and always prioritize:
+1. **Focus**: One component at a time - complete before moving on
+2. **Type Safety**: Use TypeScript and Zod validation
+3. **Security**: Validate inputs and implement proper authorization  
+4. **Testing**: Comprehensive test coverage before progression
+5. **Performance**: Optimize database queries and use caching
+6. **Maintainability**: Follow established patterns and document changes
+
+**Anti-Patterns to Avoid:**
+- Working on multiple modules simultaneously
+- Skipping testing before moving to next component
+- Implementing large features without breaking them down
+- Ignoring refactoring opportunities
